@@ -1,0 +1,29 @@
+
+    body {
+        width: 350px;
+        height: 600px;
+        padding: 10px;
+    }
+    
+    .input-group {
+        padding-bottom: 10px;
+    }
+    
+    .player-icons {
+        width: 25%;
+        float: left;
+    }
+    
+    .player span {
+        padding: 5px;
+    }
+    
+    .player-progress {
+        float: right;
+        width: 75%;
+        padding-top: 5px;
+    }
+    
+    span.duration {
+        float: right;
+    }
