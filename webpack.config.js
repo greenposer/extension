@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const path = require('path');
 
 module.exports = {
     entry: './src/js/popup.js',
@@ -15,7 +16,7 @@ eslint: { configFile: '.eslintrc' },
     module: {
         loaders: [{
             test: /.jsx?$/,
-            loaders: ['babel','eslint'],
+            loaders: ['babel'],
             exclude: /node_modules/,
         }, {
             test: /\.css$/,
@@ -40,11 +41,13 @@ eslint: { configFile: '.eslintrc' },
     plugins: [new webpack.ProvidePlugin({
         $: "jquery",
         jQuery: "jquery",
-        "window.jQuery": "jquery"
+        "window.jQuery": "jquery",
+        "React": "react"
     })],
 
     resolve: {
+        root: path.join(__dirname, 'src'),
         moduleDirectories: ['node_modules'],
-        extensions: ['', '.js']
+        extensions: ['', '.js', '.jsx']
     }
 };
