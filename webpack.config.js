@@ -1,10 +1,8 @@
 const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const path = require('path');
 
 module.exports = {
     entry: './src/js/popup.js',
-eslint: { configFile: '.eslintrc' },
 
     output: {
         path: './bin',
@@ -16,38 +14,47 @@ eslint: { configFile: '.eslintrc' },
     module: {
         loaders: [{
             test: /.jsx?$/,
-            loaders: ['babel'],
+            loaders: ['babel-loader'],
             exclude: /node_modules/,
         }, {
             test: /\.css$/,
-            loader: "style!css"
-        }, 
-         {
-        test: /\.less$/,
-        loader: "style!css!less"
-      },
-      {
-            test: /\.png$/,
-            loader: "url-loader?limit=100000"
-        }, {
-            test: /\.jpg$/,
-            loader: "file-loader"
-        }, {
-        test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)|\.svg($|\?)/,
-        loader: 'url-loader'
-    }]
+            loader: "style-loader!css"
+        },
+            {
+                test: /\.less$/,
+                loader: "style-loader!css-loader!less-loader"
+            },
+            {
+                test: /\.png$/,
+                loader: "url-loader?limit=100000"
+            }, {
+                test: /\.jpg$/,
+                loader: "file-loader"
+            }, {
+                test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)|\.svg($|\?)/,
+                loader: 'url-loader'
+            }]
     },
 
-    plugins: [new webpack.ProvidePlugin({
-        $: "jquery",
-        jQuery: "jquery",
-        "window.jQuery": "jquery",
-        "React": "react"
-    })],
+    plugins: [
+        new webpack.ProvidePlugin({
+            $: "jquery",
+            jQuery: "jquery",
+            "window.jQuery": "jquery",
+            "React": "react"
+        }),
+        new webpack.LoaderOptionsPlugin({
+            options: {
+                eslint: {configFile: '.eslintrc'}
+            }
+        })
+    ],
 
     resolve: {
-        root: path.join(__dirname, 'src'),
-        moduleDirectories: ['node_modules'],
-        extensions: ['', '.js', '.jsx']
+        modules: [
+            "node_modules",
+            path.resolve(__dirname, "src")
+        ],
+        extensions: [".js", ".json", ".jsx", ".css"]
     }
 };
